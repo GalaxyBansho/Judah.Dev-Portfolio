@@ -43,6 +43,70 @@
   word-break: break-word;
 }
 
+/* Portfolio Card Image Gallery */
+.card-gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 90px);
+  gap: 8px;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.gallery-item {
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .gallery-item img {
+  transform: scale(1.03);
+}
+
+.gallery-item.main-feature {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+}
+
+.gallery-item.mobile-view {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.gallery-item.screenshot-view {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+@media (max-width: 480px) {
+  .card-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: 140px 100px 100px;
+  }
+  .gallery-item.main-feature {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  .gallery-item.mobile-view {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  .gallery-item.screenshot-view {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+}
+
 .card-footer-link {
   margin-top: auto;
   padding-top: 12px;
@@ -430,13 +494,21 @@
   // ---------------------------------------------------------------------
   // PROJECTS CONFIGURATION
   // ---------------------------------------------------------------------
+ // ---------------------------------------------------------------------
+  // PROJECTS CONFIGURATION
+  // ---------------------------------------------------------------------
   const projects = [
     {
       title: "DeeDee's Delights",
-      type: "live-product",
+      type: "gallery",
       badge: "live e-commerce",
       badgeClass: "live",
-      description: "Designed and fully developed a responsive, custom e-commerce experience for an artisanal bakery. Automated customer order workflows and implemented a clean, secure payment pipeline.",
+      description: "Designed and fully developed a responsive, custom e-commerce experience for an artisanal bakery. Automated customer order workflows and implemented a clean, secure payment pipeline.", 
+      images: {
+        main: "https://i.postimg.cc/yWBjndmy/849shots-so.png",      // Desktop feature
+        mobile: "https://i.imgur.com/zSwrAfP.png",    // Mobile mockups
+        screenshot: "https://i.postimg.cc/DmF65Zry/830shots-so.png" // Main hero view
+      },
       tags: ["E-Commerce", "UX/UI", "Custom Front-End", "Payment Integration"],
       link: "https://deedeedelights.vercel.app/",
       linkText: "View Live Site ↗"
@@ -446,17 +518,26 @@
       type: "code-snippet",
       badge: "code & process",
       badgeClass: "draft",
-      description: "A breakdown of my approach to building component systems—translating Figma tokens into modular, responsive CSS and JavaScript. Focuses on state coverage, accessible focus states, and scalable UI logic.",
+      description: "During the development of the custom e-commerce platform for DeeDee's Delights, ensuring instantaneous, reliable order confirmations without relying on a dedicated backend server was a core objective. To achieve this, the EmailJS API was directly chained inside the PayPal Smart Payment Buttons API completion handler.",
       tags: ["Design Systems", "CSS Architecture", "State Logic", "Accessibility"],
-      codeSnippet: `/* Global Component State Spec */
-.btn-primary {
-  background: var(--accent);
-  transition: all 0.15s ease;
-}
-.btn-primary:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}`,
+      codeSnippet: `/* EmailJS API inside of Paypal API */
+async onApprove(data, actions) {
+    console.log("--- PayPal onApprove Triggered ---");
+    try {
+        const details = await actions.order.capture();
+        console.log("PayPal Capture successful!", details);
+
+        // Safe fallback calculations
+        const subtotal = window.currentCartPrice || 0;
+        const estimatedTax = subtotal * 0.0825; // 8.25% Sales tax
+        const grandTotal = subtotal + estimatedTax;
+
+        // Safe array fallback mapping
+        const localBasket = (typeof basket !== 'undefined') ? basket : [];
+        const translatedOrders = localBasket.map(item => {
+            let search = (typeof menuData !== 'undefined' ? menuData : []).find(y => y.id === item.id) || {};
+            return`,
+      link: "#",
       linkText: "Inspect Spec"
     },
     {
@@ -484,6 +565,20 @@
         extraContent = `
           <div class="code-preview-box">
             <pre><code>${p.codeSnippet}</code></pre>
+          </div>
+        `;
+      } else if (p.type === 'gallery') {
+        extraContent = `
+          <div class="card-gallery">
+            <div class="gallery-item main-feature">
+              <img src="${p.images.main}" alt="${p.title} desktop view" loading="lazy">
+            </div>
+            <div class="gallery-item mobile-view">
+              <img src="${p.images.mobile}" alt="${p.title} mobile views" loading="lazy">
+            </div>
+            <div class="gallery-item screenshot-view">
+              <img src="${p.images.screenshot}" alt="${p.title} screenshot" loading="lazy">
+            </div>
           </div>
         `;
       }
