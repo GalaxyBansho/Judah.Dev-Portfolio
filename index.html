@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Judah Davis — UX Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #101314;
+    --surface: #171b1d;
+    --surface-2: #1e2325;
+    --border: #2a3033;
+    --text: #edeee9;
+    --muted: #8b9296;
+    --accent: #6fe3c4;
+    --accent-dim: #4a9e8c;
+    --accent-2: #ffb86b;
+    --danger: #ff8b7a;
+    --radius: 3px;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }  
+  /* Card Code Snippet Preview */
+.code-preview-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  overflow-x: auto;
+  margin: 6px 0;
+}
+
+.code-preview-box pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.card-footer-link {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.card-footer-link a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.card-footer-link a:hover {
+  color: var(--text);
+}
+  html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  padding-left: 10px;
+}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--accent); color:#0a0d0e;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(16,19,20,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .logo{
+    font-family:var(--mono); font-size:14px; letter-spacing:0.02em;
+    color:var(--text); text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent);}
+  nav ul{list-style:none; display:flex; gap:28px;}
+  nav a.navlink{
+    font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none;
+    transition:color 0.15s ease;
+  }
+  nav a.navlink:hover{color:var(--accent);}
+  .navlinks-desktop{display:flex;}
+  @media (max-width:640px){
+    .navlinks-desktop{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 72px;
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--accent-dim); border-radius:20px;
+    padding:4px 12px; margin-bottom:24px;
+  }
+  .eyebrow::before{content:'●'; font-size:8px;}
+  h1{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height:1.05; letter-spacing:-0.02em;
+    max-width:14ch;
+  }
+  h1 .accent{color:var(--accent);}
+  .hero-sub{
+    color:var(--muted); font-size:1.1rem; max-width:52ch; margin-top:22px;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px;
+    padding:12px 20px; border-radius:var(--radius);
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    cursor:pointer; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--accent); color:#0a0d0e; font-weight:500;}
+  .btn-primary:hover{transform:translateY(-1px); background:#83ecd0;}
+  .btn-ghost{border-color:var(--border); color:var(--text); background:transparent;}
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* ---------- component state demo (signature element) ---------- */
+  .demo{
+    margin-top:64px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .demo-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 18px; border-bottom:1px solid var(--border);
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+  }
+  .demo-head .file{color:var(--text);}
+  .demo-body{
+    display:grid; grid-template-columns:1.2fr 1fr;
+    min-height:220px;
+  }
+  @media (max-width:720px){ .demo-body{grid-template-columns:1fr;} }
+  .demo-stage{
+    display:flex; align-items:center; justify-content:center;
+    padding:40px; border-right:1px solid var(--border);
+    position:relative;
+  }
+  @media (max-width:720px){ .demo-stage{border-right:none; border-bottom:1px solid var(--border);} }
+  .sample-btn{
+    font-family:var(--body); font-weight:600; font-size:15px;
+    padding:13px 26px; border-radius:6px; border:1px solid var(--accent-dim);
+    background:transparent; color:var(--accent); cursor:pointer;
+    transition:all 0.18s ease;
+  }
+  .sample-btn.state-default{background:transparent; color:var(--accent); border-color:var(--accent-dim);}
+  .sample-btn.state-hover{background:rgba(111,227,196,0.1); border-color:var(--accent); transform:translateY(-2px);}
+  .sample-btn.state-focus{background:transparent; border-color:var(--accent); box-shadow:0 0 0 3px rgba(111,227,196,0.25);}
+  .sample-btn.state-active{background:var(--accent); color:#0a0d0e; transform:translateY(0px) scale(0.98);}
+  .sample-btn.state-loading{background:transparent; border-color:var(--muted); color:var(--muted); cursor:progress;}
+  .sample-btn.state-error{background:rgba(255,139,122,0.1); border-color:var(--danger); color:var(--danger);}
+  .sample-btn.state-disabled{background:transparent; border-color:var(--border); color:var(--muted); opacity:0.5; cursor:not-allowed;}
+
+  .demo-list{padding:18px; font-family:var(--mono); font-size:12.5px;}
+  .demo-list .row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:9px 10px; border-radius:4px; cursor:pointer; color:var(--muted);
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .demo-list .row:hover{background:var(--surface-2);}
+  .demo-list .row.active{background:var(--surface-2); color:var(--accent);}
+  .demo-list .row span.tag{
+    font-size:10px; padding:2px 6px; border-radius:3px; border:1px solid var(--border);
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:80px 0;}
+  section + section{border-top:1px solid var(--border);}
+  .section-head{margin-bottom:44px; max-width:60ch;}
+  .badge{
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.08em;
+  }
+  h2{
+    font-family:var(--display); font-weight:600; font-size:clamp(1.6rem,3vw,2.2rem);
+    margin-top:8px; letter-spacing:-0.01em;
+  }
+  .section-desc{color:var(--muted); margin-top:12px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px;}
+  @media (max-width:720px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{color:var(--muted); margin-bottom:16px; max-width:60ch;}
+  .about-grid p strong{color:var(--text); font-weight:600;}
+  .facts{border:1px solid var(--border); border-radius:8px; padding:22px; background:var(--surface); align-self:start;}
+  .facts dt{font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:16px;}
+  .facts dt:first-child{margin-top:0;}
+  .facts dd{font-size:14px; margin-top:4px;}
+
+  /* ---------- skills / API list ---------- */
+  .api-list{border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .api-row{
+    display:grid; grid-template-columns:200px 1fr; gap:24px;
+    padding:18px 22px; border-bottom:1px solid var(--border);
+  }
+  .api-row:last-child{border-bottom:none;}
+  @media (max-width:640px){ .api-row{grid-template-columns:1fr; gap:6px;} }
+  .api-key{font-family:var(--mono); font-size:13.5px; color:var(--accent);}
+  .api-val{color:var(--muted); font-size:14px;}
+
+  /* ---------- projects ---------- */
+  .project-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:720px){ .project-grid{grid-template-columns:1fr;} }
+  .card{
+    border:1px solid var(--border); border-radius:8px; background:var(--surface);
+    padding:24px; display:flex; flex-direction:column; gap:12px;
+    transition:border-color 0.18s ease, transform 0.18s ease;
+    text-decoration:none;
+  }
+  .card:hover{border-color:var(--accent-dim); transform:translateY(-3px);}
+  .card-top{display:flex; align-items:center; justify-content:space-between;}
+  .card-status{
+    font-family:var(--mono); font-size:10.5px; padding:3px 8px; border-radius:12px;
+    border:1px solid var(--border); color:var(--muted); text-transform:lowercase;
+  }
+  .card-status.live{color:var(--accent); border-color:var(--accent-dim);}
+  .card-status.draft{color:var(--accent-2); border-color:#8a6437;}
+  .card h3{font-family:var(--display); font-size:1.15rem; font-weight:600;}
+  .card p{color:var(--muted); font-size:14px;}
+  .card-tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; padding-top:8px;}
+  .card-tags span{font-family:var(--mono); font-size:10.5px; color:var(--muted); border:1px solid var(--border); border-radius:3px; padding:2px 7px;}
+
+  .card.empty{
+    align-items:center; justify-content:center; text-align:center;
+    border-style:dashed; color:var(--muted); min-height:100%;
+  }
+  .card.empty .plus{
+    width:34px; height:34px; border-radius:50%; border:1px dashed var(--border);
+    display:flex; align-items:center; justify-content:center; font-family:var(--mono);
+    margin-bottom:10px; color:var(--accent);
+  }
+
+  /* ---------- contact ---------- */
+  .contact-box{
+    border:1px solid var(--border); border-radius:8px; background:var(--surface);
+    padding:40px; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap;
+  }
+  .contact-box h2{margin-top:0;}
+  .contact-links{display:flex; flex-direction:column; gap:10px;}
+  .contact-links a{
+    font-family:var(--mono); font-size:14px; text-decoration:none; color:var(--text);
+    display:flex; align-items:center; gap:10px;
+  }
+  .contact-links a:hover{color:var(--accent);}
+  .contact-links .k{color:var(--muted); width:70px; display:inline-block;}
+
+  footer{
+    padding:28px 0 40px; text-align:center;
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="dot"></span>judah.dev</a>
+    <ul class="navlinks-desktop">
+      <li><a class="navlink" href="#about">about</a></li>
+      <li><a class="navlink" href="#skills">skills</a></li>
+      <li><a class="navlink" href="#work">work</a></li>
+      <li><a class="navlink" href="#contact">contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap" style="padding-top:88px; border-bottom:none;">
+    <div class="eyebrow">available for team roles &amp; solo contracts</div>
+    <h1>Judah Davis builds interfaces that hold up under real <span class="accent">use</span>.</h1>
+    <p class="hero-sub">UX engineer based in Levittown, NY — working at the seam between design intent and shipped code. I design the states most people forget to design, then build them.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">See the work</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+
+    <div class="demo">
+      <div class="demo-head">
+        <span class="file">button.states.spec</span>
+        <span>click a state to preview</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-stage">
+          <button class="sample-btn state-default" id="sampleBtn">Save changes</button>
+        </div>
+        <div class="demo-list" id="stateList">
+          <div class="row active" data-state="default"><span>default</span><span class="tag">idle</span></div>
+          <div class="row" data-state="hover"><span>hover</span><span class="tag">pointer</span></div>
+          <div class="row" data-state="focus"><span>focus</span><span class="tag">keyboard</span></div>
+          <div class="row" data-state="active"><span>active</span><span class="tag">pressed</span></div>
+          <div class="row" data-state="loading"><span>loading</span><span class="tag">async</span></div>
+          <div class="row" data-state="error"><span>error</span><span class="tag">failed</span></div>
+          <div class="row" data-state="disabled"><span>disabled</span><span class="tag">blocked</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <div class="section-head" style="margin-bottom:24px;">
+          <span class="badge">[about]</span>
+          <h2>Design that ships, not just designs that render.</h2>
+        </div>
+        <p>I'm a <strong>UX engineer</strong> — I sit between product design and front-end implementation, which means I care as much about focus order and error states as I do about layout and type.</p>
+        <p>I like small teams where I can own a problem end to end, and I'm equally comfortable dropping into a solo contract to take a defined piece of work from spec to shipped.</p>
+        <p>This site is intentionally light on projects right now — it's built to grow. New work gets added here as it's finished, not staged for a big relaunch.</p>
+      </div>
+      <dl class="facts">
+        <dt>Role</dt>
+        <dd>UX Engineer</dd>
+        <dt>Based in</dt>
+        <dd>Levittown, NY</dd>
+        <dt>Open to</dt>
+        <dd>Team roles &amp; solo contracts</dd>
+        <dt>Status</dt>
+        <dd style="color:var(--accent);">Currently available</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="badge">[skills.api]</span>
+        <h2>What I bring to a project</h2>
+        <p class="section-desc">Read like a spec, because that's how I think about the work.</p>
+      </div>
+      <div class="api-list">
+        <div class="api-row">
+          <div class="api-key">interaction_design</div>
+          <div class="api-val">State-by-state UI design — default, hover, focus, loading, error, empty, disabled — designed on purpose, not left to whoever builds it last.</div>
+        </div>
+        <div class="api-row">
+          <div class="api-key">front_end_build</div>
+          <div class="api-val">HTML, CSS, JavaScript, and component-based frameworks — turning specs into interfaces that match the design, not an approximation of it.</div>
+        </div>
+        <div class="api-row">
+          <div class="api-key">design_systems</div>
+          <div class="api-val">Building and maintaining shared component libraries so teams stop redesigning the same button.</div>
+        </div>
+        <div class="api-row">
+          <div class="api-key">prototyping</div>
+          <div class="api-val">Fast, interactive prototypes for testing real interaction patterns before committing engineering time.</div>
+        </div>
+        <div class="api-row">
+          <div class="api-key">collaboration</div>
+          <div class="api-val">Comfortable as the design-to-code bridge on a product team, or working solo on a scoped contract with a clear deliverable.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="badge">[work]</span>
+        <h2>Selected projects</h2>
+        <p class="section-desc">This list is short on purpose — it grows as new work ships.</p>
+      </div>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-bottom:100px;">
+    <div class="wrap">
+      <div class="contact-box">
+        <div>
+          <span class="badge">[contact]</span>
+          <h2>Let's work together.</h2>
+          <p class="section-desc">Open to full-time, part-time, and contract work.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:judahdavis28@gmail.com"><span class="k">email</span> judahdavis28@gmail.com</a>
+          <!-- <a href="tel:+16033912139"><span class="k">phone</span> (603) 391-2139</a> -->
+          <a href="#top"><span class="k">based</span> Levittown, NY</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; <span id="year"></span> Judah Davis — built with care, and a few well-designed states.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------------------------------------------------------------------
+  // PROJECTS CONFIGURATION
+  // ---------------------------------------------------------------------
+  const projects = [
+    {
+      title: "DeeDee's Delights",
+      type: "live-product",
+      badge: "live e-commerce",
+      badgeClass: "live",
+      description: "Designed and fully developed a responsive, custom e-commerce experience for an artisanal bakery. Automated customer order workflows and implemented a clean, secure payment pipeline.",
+      tags: ["E-Commerce", "UX/UI", "Custom Front-End", "Payment Integration"],
+      link: "https://deedeedelights.vercel.app/",
+      linkText: "View Live Site ↗"
+    },
+    {
+      title: "Design System & Code Architecture",
+      type: "code-snippet",
+      badge: "code & process",
+      badgeClass: "draft",
+      description: "A breakdown of my approach to building component systems—translating Figma tokens into modular, responsive CSS and JavaScript. Focuses on state coverage, accessible focus states, and scalable UI logic.",
+      tags: ["Design Systems", "CSS Architecture", "State Logic", "Accessibility"],
+      codeSnippet: `/* Global Component State Spec */
+.btn-primary {
+  background: var(--accent);
+  transition: all 0.15s ease;
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}`,
+      linkText: "Inspect Spec"
+    },
+    {
+      title: "Houses of Power",
+      type: "case-study",
+      badge: "ux case study",
+      badgeClass: "draft",
+      description: "UX/UI overhaul for a complex public assistance and data platform. Focused on streamlining multi-step user navigation, refining typographic hierarchy, and minimizing cognitive overload across dense information views.",
+      tags: ["Information Architecture", "Wireframing", "Figma", "User Flows"],
+      link: "#",
+      linkText: "Read Case Study"
+    }
+  ];
+
+  const grid = document.getElementById('projectGrid');
+
+  function renderProjects(){
+    grid.innerHTML = "";
+    projects.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card project-card';
+      
+      let extraContent = '';
+      if (p.type === 'code-snippet') {
+        extraContent = `
+          <div class="code-preview-box">
+            <pre><code>${p.codeSnippet}</code></pre>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="card-top">
+          <h3>${p.title}</h3>
+          <span class="card-status ${p.badgeClass}">${p.badge}</span>
+        </div>
+        <p>${p.description}</p>
+        ${extraContent}
+        <div class="card-tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+        <div class="card-footer-link">
+          <a href="${p.link}" target="${p.link !== '#' ? '_blank' : '_self'}" rel="noopener">${p.linkText}</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Trailing "more work" card
+    const empty = document.createElement('div');
+    empty.className = 'card empty';
+    empty.innerHTML = `<div class="plus">+</div><p>More work landing soon.<br>Reach out if you'd like a fuller portfolio in the meantime.</p>`;
+    grid.appendChild(empty);
+  }
+  renderProjects();
+
+  // ---------------------------------------------------------------------
+  // Hero state-demo interaction
+  // ---------------------------------------------------------------------
+  const sampleBtn = document.getElementById('sampleBtn');
+  const rows = document.querySelectorAll('#stateList .row');
+  const stateOrder = ['default', 'hover', 'focus', 'active', 'loading', 'error', 'disabled'];
+  const labels = {
+    default: "Save changes",
+    hover: "Save changes",
+    focus: "Save changes",
+    active: "Save changes",
+    loading: "Saving…",
+    error: "Try again",
+    disabled: "Save changes"
+  };
+
+  function setButtonState(state) {
+    rows.forEach(r => {
+      r.classList.toggle('active', r.dataset.state === state);
+    });
+    sampleBtn.className = 'sample-btn state-' + state;
+    sampleBtn.textContent = labels[state];
+    sampleBtn.disabled = (state === 'disabled');
+  }
+
+  rows.forEach(row => {
+    row.addEventListener('click', () => setButtonState(row.dataset.state));
+  });
+
+  sampleBtn.addEventListener('click', () => {
+    const currentState = sampleBtn.className.replace('sample-btn state-', '');
+    const nextIndex = (stateOrder.indexOf(currentState) + 1) % stateOrder.length;
+    setButtonState(stateOrder[nextIndex]);
+  });
+</script>
+
+</body>
+</html>
