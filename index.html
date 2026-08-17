@@ -475,7 +475,6 @@
         </div>
         <div class="contact-links">
           <a href="mailto:judahdavis28@gmail.com"><span class="k">email</span> judahdavis28@gmail.com</a>
-          <!-- <a href="tel:+16033912139"><span class="k">phone</span> (603) 391-2139</a> -->
           <a href="#top"><span class="k">based</span> Levittown, NY</a>
         </div>
       </div>
@@ -494,10 +493,22 @@
   // ---------------------------------------------------------------------
   // PROJECTS CONFIGURATION
   // ---------------------------------------------------------------------
- // ---------------------------------------------------------------------
-  // PROJECTS CONFIGURATION
-  // ---------------------------------------------------------------------
   const projects = [
+    {
+      title: "Bloom & Balloons",
+      type: "gallery",
+      badge: "client project",
+      badgeClass: "live",
+      description: "Designed and engineered an event styling web application featuring custom responsive layouts for bespoke floral designs, quick pickup ordering pipelines, and an interactive multi-step event request form.",
+      images: {
+        main: "image_f8df96.png",       // Hero view
+        mobile: "image_f8df5c.png",     // Quick order / pickup view
+        screenshot: "image_f8debe.png" // Interactive event request form
+      },
+      tags: ["React", "Tailwind CSS", "EmailJS", "Multi-Step Form", "Responsive UI"],
+      link: "#",
+      linkText: "View Case Study"
+    },
     {
       title: "DeeDee's Delights",
       type: "gallery",
@@ -559,7 +570,7 @@ async onApprove(data, actions) {
     projects.forEach(p => {
       const card = document.createElement('div');
       card.className = 'card project-card';
-      
+
       let extraContent = '';
       if (p.type === 'code-snippet') {
         extraContent = `
@@ -571,13 +582,13 @@ async onApprove(data, actions) {
         extraContent = `
           <div class="card-gallery">
             <div class="gallery-item main-feature">
-              <img src="${p.images.main}" alt="${p.title} desktop view" loading="lazy">
+              <img src="${p.images.main}" alt="${p.title} main view" loading="lazy">
             </div>
             <div class="gallery-item mobile-view">
-              <img src="${p.images.mobile}" alt="${p.title} mobile views" loading="lazy">
+              <img src="${p.images.mobile}" alt="${p.title} feature view" loading="lazy">
             </div>
             <div class="gallery-item screenshot-view">
-              <img src="${p.images.screenshot}" alt="${p.title} screenshot" loading="lazy">
+              <img src="${p.images.screenshot}" alt="${p.title} step view" loading="lazy">
             </div>
           </div>
         `;
